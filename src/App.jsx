@@ -1,8 +1,19 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import Body from "./Body";
+import Profile from "./Profile";
+import Login from "./Login";
 // App.jsx
 function App() {
   return (
     <>
-      <h1 className="text-3xl">Hello world!</h1>
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </BrowserRouter> 
     </>
   );
 }
