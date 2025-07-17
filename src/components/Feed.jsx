@@ -16,7 +16,7 @@ const Feed = () => {
         withCredentials: true,
       });
       dispatch(addFeed(res?.data?.data));
-      console.log(res);
+      //console.log(res);
     } catch (err) {}
   };
 
@@ -24,10 +24,14 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  if(!feed) return;
-  return ( feed && <div className="flex justify-center my-10"> 
-    <UserCard user={feed[0]}/>
-  </div>);
+  if (!feed) return;
+  return (
+    feed && (
+      <div className="flex justify-center my-10">
+        <UserCard user={feed[0]} />
+      </div>
+    )
+  );
 };
 
 export default Feed;
