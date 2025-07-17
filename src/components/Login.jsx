@@ -3,19 +3,34 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router";
-import { BASE_URL} from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [emailId, setEmailId] = useState("Goldi@gmail.com");
-  const [password, setPassword] = useState("Goldi12@");
+  const [emailId, setEmailId] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
+
+  const handleSignUp = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res.data.data));
+      return navigate("/profile");
+    } catch (err) {}
+  };
 
   const handleLogin = async () => {
     try {
       const res = await axios.post(
-         BASE_URL+"/login",
+        BASE_URL + "/login",
         { emailId, password },
         { withCredentials: true }
       );
@@ -35,6 +50,36 @@ const Login = () => {
         </h2>
 
         <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          {!isLoginForm && (
+            <>
+              <div>
+                <label className="block text-slate-700 font-medium mb-1">
+                  First Name{" "}
+                </label>
+                <input
+                  type="name"
+                  value={firstName}
+                  placeholder="FirstName"
+                  className="w-full px-4 py-2 rounded-md bg-slate-100 border border-slate-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  required
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-slate-700 font-medium mb-1">
+                  Last Name{" "}
+                </label>
+                <input
+                  type="name"
+                  value={lastName}
+                  placeholder="Last Name"
+                  className="w-full px-4 py-2 rounded-md bg-slate-100 border border-slate-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  required
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </>
+          )}
           <div>
             <label className="block text-slate-700 font-medium mb-1">
               Email{" "}
@@ -74,17 +119,20 @@ const Login = () => {
 
           <button
             type="submit"
-            onClick={handleLogin}
+            onClick={isLoginForm ? handleLogin : handleSignUp}
             className="w-full py-2 px-4 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-md shadow transition duration-300"
           >
-            Log In
+            {isLoginForm ? "Log In" : "Sign Up"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
-          Don't have an account?{" "}
+        <p
+          onClick={() => setIsLoginForm((value) => !value)}
+          className="mt-6 text-center text-sm text-gray-500"
+        >
+          {isLoginForm ? "Don't have an account?" : "Already exist"}{" "}
           <a href="#" className="text-indigo-500 hover:underline font-medium">
-            Sign Up
+            {isLoginForm ? " Sign Up" : "Log In"}
           </a>
         </p>
       </div>
