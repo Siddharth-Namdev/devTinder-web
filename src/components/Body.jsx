@@ -13,7 +13,7 @@ const Body = () => {
   const userData = useSelector((store) => store.user);
 
   const fetchUser = async () => {
-    if(userData) return;
+    if (userData) return;
 
     //this is for when you are login and refresh the page you still in feed page
     try {
@@ -32,13 +32,14 @@ const Body = () => {
   useEffect(() => {
     fetchUser(); // when user is logged in then again and again not call API
   }, []);
-
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-sky-100">
       <Navbar />
-      <Outlet />
-      {/* <Footer/> */}
-    </>
+      <main className="pt-4 pb-10 px-2 sm:px-6">
+        <Outlet />
+      </main>
+      {/* <Footer /> */}
+    </div>
   );
 };
 export default Body;

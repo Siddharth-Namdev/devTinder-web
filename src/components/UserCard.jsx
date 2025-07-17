@@ -69,24 +69,34 @@ const UserCard = ({ user }) => {
   };
 
   return (
-    <div className="card bg-base-300 w-96 shadow-xl">
-      <figure>
-        <img src={user.photoUrl} alt="photo" />
+    <div className="w-full max-w-sm bg-white/60 backdrop-blur-md shadow-2xl rounded-3xl overflow-hidden transition-transform hover:scale-105 duration-300 border border-rose-200">
+      <figure className="w-full h-60 overflow-hidden">
+        <img
+          src={photoUrl}
+          alt="User"
+          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+        />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">{firstName + " " + lastName}</h2>
-        {age && gender && <p>{age + ", " + gender}</p>}
-        <p>{about}</p>
-        <div className="card-actions justify-center my-4">
+      <div className="p-6 text-center space-y-3">
+        <h2 className="text-2xl font-bold text-rose-700">
+          {firstName + " " + lastName}
+        </h2>
+        {age && gender && (
+          <p className="text-sm text-gray-700">
+            {age} years old, {gender}
+          </p>
+        )}
+        <p className="text-gray-600 text-sm">{about}</p>
+        <div className="flex justify-center gap-4 pt-4">
           <button
-            className="btn btn-primary"
             onClick={() => handleSendRequest("ignored", _id)}
+            className="px-5 py-2 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors duration-300"
           >
             Ignore
           </button>
           <button
-            className="btn btn-secondary"
             onClick={() => handleSendRequest("interested", _id)}
+            className="px-5 py-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-colors duration-300"
           >
             Interested
           </button>
