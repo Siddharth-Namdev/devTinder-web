@@ -42,8 +42,16 @@ const Connections = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {connections.map((connection) => {
-          const { _id, firstName, lastName, photoUrl, age, gender, about } =
-            connection;
+          const {
+            _id,
+            firstName,
+            lastName,
+            photoUrl,
+            age,
+            gender,
+            about,
+            skills,
+          } = connection;
 
           return (
             <div
@@ -65,6 +73,19 @@ const Connections = () => {
                       {age + " | " + gender}
                     </p>
                   )}
+                  {skills?.length > 0 && (
+                    <div className="flex flex-wrap gap-2 my-2">
+                      {skills.map((skill, idx) => (
+                        <span
+                          key={idx}
+                          className="bg-indigo-200 text-indigo-900 px-2 py-1 text-xs rounded-full"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
                   <p className="text-sm mt-2 text-gray-700 italic line-clamp-2">
                     {about}
                   </p>
