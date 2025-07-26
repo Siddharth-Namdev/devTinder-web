@@ -17,7 +17,9 @@ const Body = () => {
 
     //this is for when you are login and refresh the page you still in feed page
     try {
-      const res = await axios.get(BASE_URL + "/profile/view", {
+      const res = await axios.get(
+        BASE_URL + "/profile/view",
+         {
         withCredentials: true,
       });
       dispatch(addUser(res.data));

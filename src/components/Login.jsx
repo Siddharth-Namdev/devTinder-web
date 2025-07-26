@@ -120,7 +120,7 @@ const Login = () => {
           <button
             type="submit"
             onClick={isLoginForm ? handleLogin : handleSignUp}
-            className="w-full py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-md transition duration-300"
+            className="w-full py-2 px-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-md transition duration-300 cursor-pointer"
           >
             {isLoginForm ? "Log In" : "Sign Up"}
           </button>
@@ -141,4 +141,3 @@ const Login = () => {
 };
 
 export default Login;
-
