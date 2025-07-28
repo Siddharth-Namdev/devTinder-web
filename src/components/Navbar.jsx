@@ -87,6 +87,16 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
+                {user && (
+                  <Link
+                    to={user ? "/premium" : "/login"}
+                    className="hover:bg-rose-100 px-3 py-2 rounded-md transition-colors font-medium text-gray-700"
+                  >
+                    Premium
+                  </Link>
+                )}
+              </li>
+              <li>
                 <button
                   onClick={handleLogout}
                   className="text-red-500 hover:bg-red-50 px-3 py-2 rounded-md transition-colors w-full text-left font-medium"
