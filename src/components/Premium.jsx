@@ -1,6 +1,21 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 const Premium = () => {
+  const [isUserPremium, setIsUserPremium] = useState(false);
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+
+  const verifyPremiumUser = async () => {
+    const res = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    });
+
+    if (res.data.isPremium) {
+      setIsUserPremium(true);
+    }
+  };
+
   const handleBuyClick = async (type) => {
     const order = await axios.post(
       BASE_URL + "/payment/create",
@@ -12,24 +27,24 @@ const Premium = () => {
       }
     );
 
-
-    const {amount,keyId,orderId,notes,currency,} = order.data;
+    const { amount, keyId, orderId, notes, currency } = order.data;
 
     var options = {
-      key:keyId, 
-      amount, 
+      key: keyId,
+      amount,
       currency,
       name: "Dev Tinder", //your business name
       description: "Connect to other Developers",
-      order_id: orderId, 
+      order_id: orderId,
       prefill: {
         name: notes.firstName + " " + notes.lastName,
-        email:notes.emailId,
+        email: notes.emailId,
         contact: "+919876543210", //Provide the customer's phone number for better conversion rates
       },
       theme: {
         color: "#3399cc",
       },
+      handler: verifyPremiumUser,
     };
 
     //it should open the Razorpay Dailouge box
@@ -37,7 +52,9 @@ const Premium = () => {
     rzp1.open(); // this open the razorpay dailog box
   };
 
-  return (
+  return isUserPremium ? (
+    "You're are already a premium user"
+  ) : (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-indigo-100 flex flex-col items-center justify-center p-6">
       <h1 className="text-4xl font-bold text-indigo-800 mb-8">
         Choose Your Premium Plan
