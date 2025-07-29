@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
 import ShimmerConnections from "./ShimmerConnections";
+import { Link } from "react-router";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
@@ -12,9 +13,7 @@ const Connections = () => {
 
   const fetchConnections = async () => {
     try {
-      const res = await axios.get(
-        BASE_URL + "/user/connections", 
-        {
+      const res = await axios.get(BASE_URL + "/user/connections", {
         withCredentials: true,
       });
       dispatch(addConnection(res.data.data));
@@ -92,6 +91,11 @@ const Connections = () => {
                     {about}
                   </p>
                 </div>
+                <Link to={"/chat/" + _id}>
+                  <button className="bg-amber-700 cursor-pointer p-2">
+                    Chat
+                  </button>
+                </Link>
               </div>
             </div>
           );
